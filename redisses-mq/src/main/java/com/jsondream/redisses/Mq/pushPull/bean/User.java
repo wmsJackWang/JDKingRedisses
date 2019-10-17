@@ -13,9 +13,20 @@ import java.io.Serializable;
  * @version 1.0
  * @Date 16/7/16
  */
-public class User  implements Serializable {
+public class User extends BaseBean{
+	
+	public User() {
+		// TODO Auto-generated constructor stub
+		super(User.class.getSimpleName());
+		
+	}
 
     private static final long serialVersionUID = 4271535158365485855L;
+    
+    //业务数据的执行时间,用于测试模拟超时的消息
+    //正常情况下，如果runningtime为空，则表示业务执行时间正常执行，如果执行时间不为空，则模拟执行失败，失败时间runingTime
+    private Integer runingTime;
+    
     // 主键
     private String id;
     // 用户名
@@ -76,8 +87,17 @@ public class User  implements Serializable {
     public String getPwd() {
         return this.pwd;
     }
+    
 
-    /**
+    public Integer getRuningTime() {
+		return runingTime;
+	}
+
+	public void setRuningTime(Integer runingTime) {
+		this.runingTime = runingTime;
+	}
+
+	/**
      * @param pwd the pwd to set
      */
     public void setPwd(String pwd) {
@@ -187,5 +207,13 @@ public class User  implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+	@Override
+	public String toString() {
+		return "User [runingTime=" + runingTime + ", id=" + id + ", userName=" + userName + ", pwd=" + pwd
+				+ ", createTime=" + createTime + ", loginCount=" + loginCount + ", lastLoginTime=" + lastLoginTime
+				+ ", state=" + state + ", thirdPart=" + thirdPart + ", deviceToken=" + deviceToken + ", accessToken="
+				+ accessToken + ", recommendRank=" + recommendRank + ", phone=" + phone + "]";
+	}
 }
 

@@ -24,8 +24,8 @@ public class Publisher {
 
     public Publisher(String channel) {
         this.channel = channel;
-    }
-
+    }	
+    //测试 redis的订阅发布模式，但是要求订阅者一定在线，否则就会丢失消息。
     public void start() {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -46,4 +46,10 @@ public class Publisher {
     public static Long publish(final String channel,String message){
         return RedisClient.domain(redis -> redis.publish(channel, message));
     }
+    
+    public static void main(String[] args) {
+		
+    	Publisher publisher = new Publisher("commonChannel");
+    	publisher.start();
+	}
 }

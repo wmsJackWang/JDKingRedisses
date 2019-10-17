@@ -1,5 +1,7 @@
 package com.jsondream.redisses.Mq.subPub;
 
+import com.jsondream.redisses.client.RedisClient;
+
 import redis.clients.jedis.JedisPubSub;
 
 /**
@@ -45,4 +47,15 @@ public class Subscriber extends JedisPubSub {
     public void onPSubscribe(String pattern, int subscribedChannels) {
 
     }
+    
+    public static void main(String[] args) {
+    	final Subscriber subscriber = new Subscriber();
+
+        new Thread(() -> {
+            try {
+                RedisClient.doWithOut(redis -> redis.subscribe(subscriber, "commonChannel"));
+            } catch (Exception e) {
+            }
+        }).start();
+	}
 }

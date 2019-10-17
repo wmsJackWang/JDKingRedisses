@@ -105,6 +105,8 @@ public class RedisDelayQueue {
         lock.lock();
         try {
             RedisClient.doWithOut(redis -> {
+            	//如果delay大于0，将数据放入到等待队列
+            	//否则放入到执行队列
                 if (delay > 0) {
                     redis.zadd(delayedQueueKeyName, key, businessObjectString);
                 } else {
