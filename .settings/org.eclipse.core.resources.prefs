@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//redisses-client/src/main/java/com/jsondream/redisses/client/RedisPoolClient.java=UTF-8
+encoding//redisses-jdking-client/src/main/resources/jdkingredisses.properties=UTF-8
+encoding//redisses-lock/src/main/java/com/jsondream/redisses/lock/RLock.java=UTF-8

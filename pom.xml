@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jsondream</groupId>
@@ -14,7 +12,10 @@
         <module>redisses-common</module>
         <module>redisses-spike</module>
         <module>redisses-lock</module>
-    </modules>
+	    <module>redisses-jdking-Lock</module>
+	    <module>redisses-jdking-luaLock</module>
+    	<module>redisses-jdking-client</module>
+	  </modules>
     <dependencies>
 <!--         <dependency> -->
 <!--             <groupId>com.jsondream</groupId> -->
@@ -60,6 +61,7 @@
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
+                        <skip>true</skip>
                     </configuration>
                 </plugin>
             </plugins>

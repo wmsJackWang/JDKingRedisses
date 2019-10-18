@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * <p>
- * redis连接池客户端管理类
+ * redis杩炴帴姹犲鎴风绠＄悊绫�
  * </p>
  *
  * @author wangguangdong
@@ -33,18 +33,18 @@ public class RedisPoolClient {
         private static final RedisPoolClient redisPoolClient = new RedisPoolClient();
     }
 
-    // 连接池
+    // 杩炴帴姹�
     private static JedisPool pool;
 
-    //配置文件的配置信息获取方式
-    //全新的一种获取properties文件参数数据的方式，猜想：这个是封装了properties工具
+    //閰嶇疆鏂囦欢鐨勯厤缃俊鎭幏鍙栨柟寮�
+    //鍏ㄦ柊鐨勪竴绉嶈幏鍙杙roperties鏂囦欢鍙傛暟鏁版嵁鐨勬柟寮忥紝鐚滄兂锛氳繖涓槸灏佽浜唒roperties宸ュ叿
     private static final ResourceBundle bundle = ResourceBundle.getBundle("redis");
 
     public void initPool() {
         if (bundle == null) {
             throw new IllegalArgumentException("[redis.properties] is not found!");
         }
-        // redis配置信息
+        // redis閰嶇疆淇℃伅
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxTotal")));
         config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
@@ -52,28 +52,28 @@ public class RedisPoolClient {
         config.setTestOnBorrow(Boolean.valueOf(bundle.getString("redis.pool.testOnBorrow")));
         config.setTestOnReturn(Boolean.valueOf(bundle.getString("redis.pool.testOnReturn")));
 
-        // sohu-test-redis连接信息
-        pool = new JedisPool(config, bundle.getString("redis.ip"),
-            Integer.valueOf(bundle.getString("redis.port")),
-            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
-            bundle.getString("redis.auth"));
-        
-        // my-test-redis连接信息 ，无密码初始化
+        // sohu-test-redis杩炴帴淇℃伅
 //        pool = new JedisPool(config, bundle.getString("redis.ip"),
-//                Integer.valueOf(bundle.getString("redis.port")),
-//                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
+//            Integer.valueOf(bundle.getString("redis.port")),
+//            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
+//            bundle.getString("redis.auth"));
+        
+        // my-test-redis杩炴帴淇℃伅 锛屾棤瀵嗙爜鍒濆鍖�
+        pool = new JedisPool(config, bundle.getString("redis.ip"),
+                Integer.valueOf(bundle.getString("redis.port")),
+                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
     }
 
         public static void main(String[] args) {
             RedisPoolClient.getInstance().initPool();
-            // 从池中获取一个Jedis对象
+            // 浠庢睜涓幏鍙栦竴涓狫edis瀵硅薄
             Jedis jedis = RedisPoolClient.getInstance().getJedis();
             String keys = "name";
-            // 删数据
+            // 鍒犳暟鎹�
             jedis.del(keys);
-            // 存数据
+            // 瀛樻暟鎹�
             jedis.set(keys, "snowolf");
-            // 取数据
+            // 鍙栨暟鎹�
             String value = jedis.get(keys);
     
             Map<String, String> map = new HashMap<>();
@@ -111,9 +111,9 @@ public class RedisPoolClient {
 //
 //
 //
-//        jedis.zremrangeByLex("hehu","[09987:123","[－");
+//        jedis.zremrangeByLex("hehu","[09987:123","[锛�");
 //        Set<String> s = jedis.zrevrange("hehu", 0, 10);
-//        System.out.println("集合的数据个数: "+s.size());
+//        System.out.println("闆嗗悎鐨勬暟鎹釜鏁�: "+s.size());
 //
 //
 //
@@ -128,7 +128,7 @@ public class RedisPoolClient {
 //    }
 
     /**
-     * 获取Jedis实例
+     * 鑾峰彇Jedis瀹炰緥
      *
      * @return
      */
@@ -138,18 +138,18 @@ public class RedisPoolClient {
                 Jedis resource = pool.getResource();
                 return resource;
             } else {
-                // 腾讯云的redis,3个小时没有数据传输就会断开长连接,这里是为了重新建立长连接
+                // 鑵捐浜戠殑redis,3涓皬鏃舵病鏈夋暟鎹紶杈撳氨浼氭柇寮�闀胯繛鎺�,杩欓噷鏄负浜嗛噸鏂板缓绔嬮暱杩炴帴
                 initPool();
                 return pool != null ? pool.getResource() : null;
             }
         } catch (Exception e) {
-            //TODO: connect error log的记录....
+            //TODO: connect error log鐨勮褰�....
         }
         return null;
     }
 
     /**
-     * 释放jedis资源
+     * 閲婃斁jedis璧勬簮
      *
      * @param jedis
      */
@@ -160,7 +160,7 @@ public class RedisPoolClient {
     }
 
     /**
-     * 释放对象池
+     * 閲婃斁瀵硅薄姹�
      */
     public void destroy() {
         synchronized (pool) {
