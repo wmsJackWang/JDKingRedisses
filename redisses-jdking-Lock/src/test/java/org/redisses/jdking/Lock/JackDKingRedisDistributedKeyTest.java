@@ -1,5 +1,7 @@
 package org.redisses.jdking.Lock;
 
+import java.util.concurrent.CountDownLatch;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -7,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class JackDKingRedisDistributedKeyTest 
     extends TestCase
 {
     /**
@@ -15,7 +17,7 @@ public class AppTest
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
+    public JackDKingRedisDistributedKeyTest( String testName )
     {
         super( testName );
     }
@@ -25,7 +27,7 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( JackDKingRedisDistributedKeyTest.class );
     }
 
     /**
@@ -34,5 +36,16 @@ public class AppTest
     public void testApp()
     {
         assertTrue( true );
+
+        long time = 6000;
+		CountDownLatch countDownLatch =new CountDownLatch(1);
+		
+		for(int i =0 ;i<10;++i)
+		{
+			System.out.println("创建任务");
+			new Thread(new MyTask(time+i*10000, countDownLatch , ""+i)).start();
+		}
+		System.out.println("测试开始.......");
+		countDownLatch.countDown();
     }
 }

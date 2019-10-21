@@ -69,8 +69,7 @@ public class JDKingRedisPool {
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw e; 
         }
     }
 	
@@ -90,7 +89,7 @@ public class JDKingRedisPool {
      *
      * @param jedis
      */
-    public void returnResource(final Jedis jedis) {
+    public static void returnResource(final Jedis jedis) {
         if (jedisPool != null && jedisPool != null) {
         	jedisPool.returnResourceObject(jedis);
         }
@@ -99,7 +98,7 @@ public class JDKingRedisPool {
     /**
      * 结束的时候销毁redis连接池资源
      */
-    public void destroy() {
+    public static void destroy() {
         synchronized (jedisPool) {
             if (jedisPool != null) {
             	jedisPool.destroy();

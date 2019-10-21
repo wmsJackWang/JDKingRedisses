@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>redisses-mq</artifactId>
+    <artifactId>redisses-jackdking-mq</artifactId>
 
 
     <dependencies>
@@ -17,6 +17,11 @@
             <groupId>com.jsondream</groupId>
             <artifactId>redisses-client</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+			<groupId>com.jackdking</groupId>
+			<artifactId>redisses-jdking-client</artifactId>
+			<version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

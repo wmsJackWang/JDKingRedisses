@@ -1,1 +1,2 @@
-org\redisses\jdking\Lock\App.class
+org\redisses\jdking\Lock\JackDKingRedisDistributedKey.class
+org\redisses\jdking\Lock\MyTask.class

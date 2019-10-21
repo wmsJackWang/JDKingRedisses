@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>redisses-mq</module>
+        <module>redisses-jackdking-mq</module>
         <module>redisses-client</module>
         <module>redisses-common</module>
         <module>redisses-spike</module>
@@ -61,7 +61,7 @@
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
-                        <skip>true</skip>
+<!--                     	<skip>true</skip> -->
                     </configuration>
                 </plugin>
             </plugins>

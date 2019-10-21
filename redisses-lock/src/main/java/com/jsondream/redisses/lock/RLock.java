@@ -155,6 +155,7 @@ public class RLock {
                         // 开启事务
                         Transaction tx = redis.multi();
                         // 执行操作,此操作具有原子性
+                        // 这个set操作直接覆盖keys原来的value值，作者却没有给失效时间
                         tx.set(keys, lockValue);
                         // 提交事务
                         List<Object> txResult = tx.exec();

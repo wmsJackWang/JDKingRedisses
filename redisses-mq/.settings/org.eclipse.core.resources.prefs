@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/jsondream/redisses/Mq/delayedTask/RedisDelayQueue.java=UTF-8
 encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/MessageHandler.java=UTF-8
 encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/MessageRePending.java=UTF-8
 encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/QueueProcessor.java=UTF-8
 encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/RedisQueueProducer.java=UTF-8
+encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/bean/BaseBean.java=UTF-8
+encoding//src/main/java/com/jsondream/redisses/Mq/pushPull/bean/User.java=UTF-8

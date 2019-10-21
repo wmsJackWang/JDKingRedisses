@@ -9,12 +9,10 @@ package com.jsondream.redisses.Mq.pushPull.bean;
  * @version 1.0
  * @Date 16/7/13
  */
-public class RedisQueueMessage<T> {
+public class RedisQueueMessage<T>{
     int bodyCode;
     T body;
-
-    public RedisQueueMessage() {
-    }
+ 
 
     public RedisQueueMessage(int bodyCode, T body) {
         this.bodyCode = bodyCode;
