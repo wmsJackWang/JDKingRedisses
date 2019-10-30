@@ -53,15 +53,15 @@ public class RedisPoolClient {
         config.setTestOnReturn(Boolean.valueOf(bundle.getString("redis.pool.testOnReturn")));
 
         // sohu-test-redis杩炴帴淇℃伅
-//        pool = new JedisPool(config, bundle.getString("redis.ip"),
-//            Integer.valueOf(bundle.getString("redis.port")),
-//            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
-//            bundle.getString("redis.auth"));
+        pool = new JedisPool(config, bundle.getString("redis.ip"),
+            Integer.valueOf(bundle.getString("redis.port")),
+            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
+            bundle.getString("redis.auth"));
         
         // my-test-redis杩炴帴淇℃伅 锛屾棤瀵嗙爜鍒濆鍖�
-        pool = new JedisPool(config, bundle.getString("redis.ip"),
-                Integer.valueOf(bundle.getString("redis.port")),
-                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
+//        pool = new JedisPool(config, bundle.getString("redis.ip"),
+//                Integer.valueOf(bundle.getString("redis.port")),
+//                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
     }
 
         public static void main(String[] args) {

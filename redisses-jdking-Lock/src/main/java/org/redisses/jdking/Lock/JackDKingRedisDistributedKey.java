@@ -18,8 +18,8 @@ public class JackDKingRedisDistributedKey
 		JDKingResultInfo<Long> resultInfo = JDKingRedisClient.doWithOut((jedis)->{
 			jedis.del(key);
 		});
-		
 	}
+	
 	
 	public static Object get(String key) {
 		JDKingResultInfo<String> resultInfo = JDKingRedisClient.domain((jedis)->{
@@ -54,7 +54,7 @@ public class JackDKingRedisDistributedKey
 			{
 				//为已经获取的锁，设置过期时间
 				long expireResult = jedis.expire(key, (int) (defaultExpireTime/1000));
-				//expireResult==0的情况是为了支持Redis versions <2.1.3情形下，过期时间存在则不会设置
+				//expireResult==0的情况是为了支持Redis versions <2.1.3情形下，过期时间存在则不会设置，之后的版本则会覆盖过期时间
 				if(expireResult==0)
 					return false;
 				else
