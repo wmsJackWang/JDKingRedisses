@@ -4,7 +4,7 @@ local expireTime = ARGV[1]
 
 local value = ARGV[1] 
 
---使用redis的setnx命令加锁
+--使用redis的setnx命令加锁 
 local result = redis.call('setnx',key,value)
 
 if result == 1 

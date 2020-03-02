@@ -13,7 +13,7 @@ import java.util.Set;
 
 /**
  * <p>
- * redis杩炴帴姹犲鎴风绠＄悊绫�
+ * redis鏉╃偞甯村Ч鐘差吂閹撮顏粻锛勬倞缁拷
  * </p>
  *
  * @author wangguangdong
@@ -33,18 +33,18 @@ public class RedisPoolClient {
         private static final RedisPoolClient redisPoolClient = new RedisPoolClient();
     }
 
-    // 杩炴帴姹�
+    // 鏉╃偞甯村Ч锟�
     private static JedisPool pool;
 
-    //閰嶇疆鏂囦欢鐨勯厤缃俊鎭幏鍙栨柟寮�
-    //鍏ㄦ柊鐨勪竴绉嶈幏鍙杙roperties鏂囦欢鍙傛暟鏁版嵁鐨勬柟寮忥紝鐚滄兂锛氳繖涓槸灏佽浜唒roperties宸ュ叿
+    //闁板秶鐤嗛弬鍥︽閻ㄥ嫰鍘ょ純顔讳繆閹垵骞忛崣鏍ㄦ煙瀵拷
+    //閸忋劍鏌婇惃鍕缁夊秷骞忛崣鏉檙operties閺傚洣娆㈤崣鍌涙殶閺佺増宓侀惃鍕煙瀵骏绱濋悮婊勫厒閿涙俺绻栨稉顏呮Ц鐏忎浇顥婃禍鍞抮operties瀹搞儱鍙�
     private static final ResourceBundle bundle = ResourceBundle.getBundle("redis");
 
     public void initPool() {
         if (bundle == null) {
             throw new IllegalArgumentException("[redis.properties] is not found!");
         }
-        // redis閰嶇疆淇℃伅
+        // redis闁板秶鐤嗘穱鈩冧紖
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(Integer.valueOf(bundle.getString("redis.pool.maxTotal")));
         config.setMaxIdle(Integer.valueOf(bundle.getString("redis.pool.maxIdle")));
@@ -52,29 +52,30 @@ public class RedisPoolClient {
         config.setTestOnBorrow(Boolean.valueOf(bundle.getString("redis.pool.testOnBorrow")));
         config.setTestOnReturn(Boolean.valueOf(bundle.getString("redis.pool.testOnReturn")));
 
-        // sohu-test-redis杩炴帴淇℃伅
-        pool = new JedisPool(config, bundle.getString("redis.ip"),
-            Integer.valueOf(bundle.getString("redis.port")),
-            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
-            bundle.getString("redis.auth"));
-        
-        // my-test-redis杩炴帴淇℃伅 锛屾棤瀵嗙爜鍒濆鍖�
+        // sohu-test-redis鏉╃偞甯存穱鈩冧紖
 //        pool = new JedisPool(config, bundle.getString("redis.ip"),
-//                Integer.valueOf(bundle.getString("redis.port")),
-//                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
+//            Integer.valueOf(bundle.getString("redis.port")),
+//            Integer.valueOf(bundle.getString("redis.connectionOutTime")),
+//            bundle.getString("redis.auth"));
+        
+        // my-test-redis鏉╃偞甯存穱鈩冧紖 閿涘本妫ょ�靛棛鐖滈崚婵嗩潗閸栵拷
+        pool = new JedisPool(config, bundle.getString("redis.ip"),
+                Integer.valueOf(bundle.getString("redis.port")),
+                Integer.valueOf(bundle.getString("redis.connectionOutTime")));
     }
 
         public static void main(String[] args) {
             RedisPoolClient.getInstance().initPool();
-            // 浠庢睜涓幏鍙栦竴涓狫edis瀵硅薄
+            // 娴犲孩鐫滄稉顓″箯閸欐牔绔存稉鐙玡dis鐎电钖�
             Jedis jedis = RedisPoolClient.getInstance().getJedis();
             String keys = "name";
-            // 鍒犳暟鎹�
+            // 閸掔姵鏆熼幑锟�
             jedis.del(keys);
-            // 瀛樻暟鎹�
+            // 鐎涙ɑ鏆熼幑锟�
             jedis.set(keys, "snowolf");
-            // 鍙栨暟鎹�
+            // 閸欐牗鏆熼幑锟�
             String value = jedis.get(keys);
+            System.out.println("是否存在这个key(name):"+jedis.exists(keys));
     
             Map<String, String> map = new HashMap<>();
             map.put("sc", "sb");
@@ -111,9 +112,9 @@ public class RedisPoolClient {
 //
 //
 //
-//        jedis.zremrangeByLex("hehu","[09987:123","[锛�");
+//        jedis.zremrangeByLex("hehu","[09987:123","[閿涳拷");
 //        Set<String> s = jedis.zrevrange("hehu", 0, 10);
-//        System.out.println("闆嗗悎鐨勬暟鎹釜鏁�: "+s.size());
+//        System.out.println("闂嗗棗鎮庨惃鍕殶閹诡喕閲滈弫锟�: "+s.size());
 //
 //
 //
@@ -128,7 +129,7 @@ public class RedisPoolClient {
 //    }
 
     /**
-     * 鑾峰彇Jedis瀹炰緥
+     * 閼惧嘲褰嘕edis鐎圭偘绶�
      *
      * @return
      */
@@ -138,18 +139,18 @@ public class RedisPoolClient {
                 Jedis resource = pool.getResource();
                 return resource;
             } else {
-                // 鑵捐浜戠殑redis,3涓皬鏃舵病鏈夋暟鎹紶杈撳氨浼氭柇寮�闀胯繛鎺�,杩欓噷鏄负浜嗛噸鏂板缓绔嬮暱杩炴帴
+                // 閼垫崘顔嗘禍鎴犳畱redis,3娑擃亜鐨弮鑸电梾閺堝鏆熼幑顔荤炊鏉堟挸姘ㄦ导姘焽瀵拷闂�鑳箾閹猴拷,鏉╂瑩鍣烽弰顖欒礋娴滃棝鍣搁弬鏉跨紦缁斿鏆辨潻鐐村复
                 initPool();
                 return pool != null ? pool.getResource() : null;
             }
         } catch (Exception e) {
-            //TODO: connect error log鐨勮褰�....
+            //TODO: connect error log閻ㄥ嫯顔囪ぐ锟�....
         }
         return null;
     }
 
     /**
-     * 閲婃斁jedis璧勬簮
+     * 闁插﹥鏂乯edis鐠у嫭绨�
      *
      * @param jedis
      */
@@ -160,7 +161,7 @@ public class RedisPoolClient {
     }
 
     /**
-     * 閲婃斁瀵硅薄姹�
+     * 闁插﹥鏂佺�电钖勫Ч锟�
      */
     public void destroy() {
         synchronized (pool) {
