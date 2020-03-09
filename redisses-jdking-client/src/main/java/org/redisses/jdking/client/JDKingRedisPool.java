@@ -51,9 +51,9 @@ public class JDKingRedisPool {
         
         int TIMEOUT = Integer.valueOf(properties.getProperty("redisses.jdking.client.timeout"));
         
-        jedisPool = new JedisPool(config, JACKDKING_ADDR, JACKDKING_PORT, TIMEOUT); // sohu redis
+        jedisPool = new JedisPool(config, JACKDKING_ADDR, JACKDKING_PORT, TIMEOUT, JACKDKING_AUTH); //my redis
         
-//        jedisPool = new JedisPool(config, SOHU_ADDR, SOHU_PORT,TIMEOUT, SOHU_AUTH);  //my redis
+//        jedisPool = new JedisPool(config, SOHU_ADDR, SOHU_PORT,TIMEOUT, SOHU_AUTH);  //  sohu redis
 	}
 	
 	/**

@@ -15,7 +15,8 @@
 	    <module>redisses-jdking-Lock</module>
 	    <module>redisses-jdking-luaLock</module>
     	<module>redisses-jdking-client</module>
-	  </modules>
+    	<module>redisses-jackdking-jiankucun</module>
+  </modules>
     <dependencies>
 <!--         <dependency> -->
 <!--             <groupId>com.jsondream</groupId> -->
