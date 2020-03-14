@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -63,11 +64,12 @@ public class StockReduce
         } 
     }
     
-    private static Long reduceStock(String key, Long reduceValue) {
+    private static Long reduceStock(String key,Long orderid , Long reduceValue) {
 		// TODO Auto-generated method stub
     		JDKingResultInfo<Long> resultInfo = JDKingRedisClient.domain((jedis)->{
     		
-    		List<String> keyList = Collections.singletonList(key);
+//    		List<String> keyList = Collections.singletonList(key);
+    		List<String> keyList = Arrays.asList(key,orderid+"");
 
             List<String> argsList = Collections.singletonList(reduceValue+"");
 			
@@ -99,7 +101,7 @@ public class StockReduce
     	
 //    	setStock("testkey",1000L);
     	System.out.println("success");
-    	System.out.println(reduceStock("testkey", 10L));
+    	System.out.println(reduceStock("testkey", System.currentTimeMillis(), 10L));
 	}
     
 }

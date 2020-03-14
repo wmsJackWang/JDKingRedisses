@@ -6,24 +6,27 @@
     <groupId>com.jackdking</groupId>
     <artifactId>redisses</artifactId>
     <version>1.0-SNAPSHOT</version>
-  </parent> 
-  <artifactId>redisses-jdking-luaLock</artifactId>
-  <name>redisses-jdking-luaLock</name>
+  </parent>
+  <groupId>com.jackdking</groupId>
+  <artifactId>redisses-jdking-limiter</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>redisses-jdking-limiter</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
+  	<dependency>
+  	  <groupId>com.jackdking</groupId>
+	  <artifactId>redisses-jdking-client</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+  	</dependency>
+  
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-	  <groupId>com.jackdking</groupId>
-	  <artifactId>redisses-jdking-client</artifactId>
-	  <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
