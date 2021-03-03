@@ -101,7 +101,8 @@ public class StockReduce
     	
 //    	setStock("testkey",1000L);
     	System.out.println("success");
-    	System.out.println(reduceStock("testkey", System.currentTimeMillis(), 10L));
+//    	setStock("testkey",100L);
+    	System.out.println(reduceStock("testkey1", System.currentTimeMillis(), 10L));
 	}
     
 }

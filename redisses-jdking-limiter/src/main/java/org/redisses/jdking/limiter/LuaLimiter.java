@@ -61,8 +61,8 @@ public class LuaLimiter
 	        List<String> keys = new ArrayList<>();
 	        keys.add("ip:limit:127.0.0.1");
 	        List<String> arggs = new ArrayList<>();
-	        arggs.add("6000");//限流的时间范围
-	        arggs.add("4");//限流  数字为4 
+	        arggs.add("1000");//限流的时间范围
+	        arggs.add("10");//限流  数字为4 
 	        //两个参数的含义： 6s内 只允许 4个请求 通过。
 	        //下面方法是返回  lua脚本在redis中的缓存id。后续通过id来执行脚本，避免每次执行都传  lua 代码
         	String luaLoad = jedis.scriptLoad(lua);
@@ -71,9 +71,9 @@ public class LuaLimiter
 	        for(int i =0 ; ; i++)
 	        {
 		        Object obj = jedis.evalsha(luaLoad,keys,arggs);
-		        System.out.println("第"+i+"个500ms时刻执行脚本返回结果:"+obj);
+		        System.out.println("第"+i+"个10微秒时刻执行脚本返回结果:"+obj);
 		        try {
-					TimeUnit.MILLISECONDS.sleep(500);
+					TimeUnit.MICROSECONDS.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -14,6 +14,12 @@ local reduceNumber = tonumber(reduceValue)
 --比较模块，比较现存库存数量是否大于扣减量
 --获取库现有存量
 local result = redis.call('get',key)
+
+-- 判断result库存的key是否存在，如果不存在则直接返回-2
+if	result == false 
+	then return -2  --没有库存数据
+end
+
 --将result的string类型转换成数字类型
 local resultNumber = tonumber(result)
 
