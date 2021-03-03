@@ -17,7 +17,7 @@ import redis.clients.jedis.Jedis;
 public class RedPacket 
 {
 	static String host = "localhost";
-	static int honBaoCount = 1_0_0000;
+	static int honBaoCount = 100000;
 	
 	static int threadCount = 20;
 	
@@ -60,6 +60,8 @@ public class RedPacket
 		Jedis jedis = new Jedis(host);
 		jedis.flushAll();
 		final CountDownLatch latch = new CountDownLatch(threadCount);
+		double[] redpackets = RedPacketSplitAlgorithm.generateDoubleRedPacket((double)honBaoCount, honBaoCount);
+		
 		for(int i = 0; i < threadCount; ++i) {
 			final int temp = i;
 			Thread thread = new Thread() {
@@ -69,7 +71,7 @@ public class RedPacket
 					JSONObject object = new JSONObject();
 					for(int j = temp * per; j < (temp+1) * per; j++) {
 						object.put("id", j);
-						object.put("money", j);
+						object.put("money", redpackets[j]);
 						jedis.lpush(hongBaoList, object.toJSONString());
 					}
 					latch.countDown();

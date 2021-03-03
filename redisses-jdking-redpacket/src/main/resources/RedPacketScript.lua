@@ -9,10 +9,10 @@ else
  -- 先取出一个小红包 
  local hongBao = rediscall('rpop', KEYS[1]); 
  if hongBao then 
-  local x = cjsondecode(hongBao); 
+  local x = cjsondecode(hongBao); --这个相当于将json字符串转化成jsonobject
   -- 加入用户ID信息 
   x['userId'] = KEYS[4]; 
-  local re = cjsonencode(x); 
+  local re = cjsonencode(x); --这个 就是将jsonobject转化成json字符串
   -- 把用户ID放到去重的set里 
   rediscall('hset', KEYS[3], KEYS[4], KEYS[4]); 
   -- 把红包放到已消费队列里 
