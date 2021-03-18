@@ -1,5 +1,6 @@
 package org.redisses.jdking.redpacket;
 
+import java.math.BigDecimal;
 import java.util.Random;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
@@ -40,23 +41,23 @@ public class RedPacketSplitAlgorithm{
 	  
 	   
 	  public static void main(String[] args) { 
-		double totalM = 10000;
+		double totalM = 0.82;
 		long totalL = (long)(totalM*100);
-		int countR = 10000;
+		int countR = 10;
 	    long average = totalL / countR; 
 	    long max = average+(totalL-average)/4; 
 	    long min = 1; 
 	 
 	    double[] result = RedPacketSplitAlgorithm.generateDoubleRedPacket(totalM, countR); 
-	    double total = 0; 
+	    BigDecimal total = BigDecimal.ZERO; 
 	    for (int i = 0; i < result.length; i++) { 
 	      // Systemoutprintln("result[" + i + "]:" + result[i]); 
 	      // Systemoutprintln(result[i]); 
-	      total += result[i]; 
+	    	total = total.add(new BigDecimal(result[i])); 
 	      System.out.print(result[i]+" ");
 	    } 
 	    //检查生成的红包的总额是否正确 
-	    System.out.println("total:" + total); 
+	    System.out.println("total:" + total.toString()); 
 	 
 //	    //统计每个钱数的红包数量，检查是否接近正态分布 
 //	    int count[] = new int[(int) max + 1]; 

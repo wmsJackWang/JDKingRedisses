@@ -20,8 +20,9 @@
     	<module>redisses-jdking-client</module>
     	<module>redisses-jackdking-jiankucun</module>
     	<module>redisses-jdking-limiter</module>
-    <module>redisses-jdking-redpacket</module>
-  </modules>
+	    <module>redisses-jdking-redpacket</module>
+	    <module>redisses-jackdking-delay-scene</module>
+    </modules>
     <dependencies>
 <!--         <dependency> -->
 <!--             <groupId>com.jsondream</groupId> -->

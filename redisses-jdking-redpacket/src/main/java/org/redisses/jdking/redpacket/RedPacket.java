@@ -1,6 +1,8 @@
 package org.redisses.jdking.redpacket;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
@@ -17,7 +19,8 @@ import redis.clients.jedis.Jedis;
 public class RedPacket 
 {
 	static String host = "localhost";
-	static int honBaoCount = 100000;
+	static int honBaoCount = 10;
+	static double hongBao = 98.8;
 	
 	static int threadCount = 20;
 	
@@ -52,7 +55,7 @@ public class RedPacket
 	
 	public static void main(String[] args) throws InterruptedException {
 //		testEval();
-		generateTestData();
+//		generateTestData();
 		testTryGetHongBao();
 	}
 	
@@ -60,61 +63,48 @@ public class RedPacket
 		Jedis jedis = new Jedis(host);
 		jedis.flushAll();
 		final CountDownLatch latch = new CountDownLatch(threadCount);
-		double[] redpackets = RedPacketSplitAlgorithm.generateDoubleRedPacket((double)honBaoCount, honBaoCount);
+		double[] redpackets = RedPacketSplitAlgorithm.generateDoubleRedPacket(hongBao, honBaoCount);
 		
-		for(int i = 0; i < threadCount; ++i) {
-			final int temp = i;
-			Thread thread = new Thread() {
-				public void run() {
-					Jedis jedis = new Jedis(host);
-					int per = honBaoCount/threadCount;
-					JSONObject object = new JSONObject();
-					for(int j = temp * per; j < (temp+1) * per; j++) {
-						object.put("id", j);
-						object.put("money", redpackets[j]);
-						jedis.lpush(hongBaoList, object.toJSONString());
-					}
-					latch.countDown();
-				}
-			};
-			thread.start();
+  
+		JSONObject object = new JSONObject();
+		List<String> values = new ArrayList<String>();
+		for(int j = 0; j < honBaoCount; j++) {
+			object.put("id", j);
+			object.put("money", redpackets[j]);
+//			jedis.lpush(hongBaoList, object.toJSONString());
+			values.add(object.toJSONString());
 		}
-		latch.await();
+		List<String> keys = Arrays.asList(RedPacket.hongBaoList);
+		PushRedPacket.pushRedPakcet(keys,values);
 	}
 	
 	static public void testTryGetHongBao() throws InterruptedException {
-		final CountDownLatch latch = new CountDownLatch(threadCount);
+//		final CountDownLatch latch = new CountDownLatch(threadCount);
 		System.err.println("start:" + System.currentTimeMillis()/1000);
-		watch.start();
-		for(int i = 0; i < threadCount; ++i) {
-			final int temp = i;
-			Thread thread = new Thread() {
-				public void run() {
-					Jedis jedis = new Jedis(host);
-					String sha = jedis.scriptLoad(tryGetHongBaoScript);
-					int j = honBaoCount/threadCount * temp;
-					while(true) {
-						Object object = jedis.eval(tryGetHongBaoScript, 4, hongBaoList, hongBaoConsumedList, hongBaoConsumedMap, "" + j);
-						j++;
-						if (object != null) {
-//							System.out.println("get hongBao:" + object);
-						}else {
-							//已经取完了
-							if(jedis.llen(hongBaoList) == 0)
-								break;
-						}
-					}
-					latch.countDown();
-				}
-			};
-			thread.start();
+		Jedis jedis = new Jedis(host);
+		String sha = jedis.scriptLoad(tryGetHongBaoScript);
+//		watch.start();
+					
+		int j = honBaoCount;
+		while(true) {
+			Object object = jedis.evalsha(sha , 4, hongBaoList, hongBaoConsumedList, hongBaoConsumedMap, "" + j);
+//						Object object = jedis.eval(tryGetHongBaoScript, 4, hongBaoList, hongBaoConsumedList, hongBaoConsumedMap, "" + j);
+			j++;
+			if (object != null) {
+				System.out.println("get hongBao:" + object);
+			}else {
+				//已经取完了
+				if(jedis.llen(hongBaoList) == 0)
+					System.out.println("红包已经取完了");
+					break;
+			}
 		}
 		
-		latch.await();
-		watch.stop();
-		
-		System.err.println("time:" + watch.getTime());
-		System.err.println("speed:" + 1000*honBaoCount/watch.getTime());
-		System.err.println("end:" + System.currentTimeMillis()/1000);
+//		latch.await();
+//		watch.stop();
+//		
+//		System.err.println("time:" + watch.getTime());
+//		System.err.println("speed:" + 1000*honBaoCount/watch.getTime());
+//		System.err.println("end:" + System.currentTimeMillis()/1000);
 	}
 }

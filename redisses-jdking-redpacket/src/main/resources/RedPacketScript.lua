@@ -1,6 +1,11 @@
 -- 函数：尝试获得红包，如果成功，则返回json字符串，如果不成功，则返回空 
 -- 参数：红包队列名， 已消费的队列名，去重的Map名，用户ID 
 -- 返回值：nil 或者 json字符串，包含用户ID：userId，红包ID：id，红包金额：money 
+
+-- 如果队列不存在，则表示红包信息不存在 。
+if rediscall('EXISTS',KEYS[1])==false or rediscall('llen',KEYS[1]) == 0 then
+	return nil
+end
  
 -- 如果用户已抢过红包，则返回nil 
 if rediscall('hexists', KEYS[3], KEYS[4]) ~= 0 then 
